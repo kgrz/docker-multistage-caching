@@ -1,0 +1,23 @@
+diff --git Dockerfile.gorust.ms Dockerfile.gorust.ms.exchanged
+index 7de4300..8fb7ffe 100644
+--- Dockerfile.gorust.ms
++++ Dockerfile.gorust.ms.exchanged
+@@ -5,14 +5,15 @@ RUN apt-get -qq update \
+         curl \
+         ca-certificates
+ 
++FROM base as rust
++RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh \
++        && bash rustup.sh -y --profile minimal
++
+ FROM base as go
+ RUN curl --proto '=https' -sSf \
+             https://dl.google.com/go/go1.13.7.linux-amd64.tar.gz > go.tar.gz \
+         && tar -C /usr/local -xzf go.tar.gz
+ 
+-FROM base as rust
+-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh \
+-        && bash rustup.sh -y --profile minimal
+ 
+ FROM base
+ 
